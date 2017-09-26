@@ -1,0 +1,39 @@
+apply plugin: 'java'
+
+jar {
+  manifest {
+    attributes 'Main-Class': 'com.joshkoehler.Hello'
+  }
+}
+
+task hello {
+  doLast {
+    println "Hello, Gradle" 
+  }
+}
+
+sourceSets {
+  main {
+    java {
+      srcDirs {
+        "$projectDir/src/anotherMain/java"
+      }
+      outputDir = file("$buildDir/classes/all/java/")
+      println srcDirs
+      println outputDir
+    }
+    resources {
+      srcDirs {
+        "$projectDir/src/moreResources"
+      }
+      output.resourcesDir = file("$buildDir/resources/all")
+      println srcDirs
+      println output.resourcesDir
+    }
+  }
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '4.2'
+}
+
